@@ -12,9 +12,9 @@ class Dirichlet(Boco):
             https://www.simscale.com/docs/simwiki/numerics-background/what-are-boundary-conditions/
 
         Args:
-            sampler (base_sampler): [description]
-            output_fn (function): [description]
-            name (str, optional): [description]. Defaults to "dirichlet".
+            sampler (base_sampler): This takes in a sampler which tells where to apply the boundary condition
+            output_fn (function): A function that describes what the outputs should be if the sampler.sample() as passed in
+            name (str, optional): Name of the boundary condition. Defaults to "dirichlet".
         """
         super().__init__(name)
         self.vars = sampler.vars
