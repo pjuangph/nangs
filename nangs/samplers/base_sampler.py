@@ -1,8 +1,9 @@
+from typing import Dict
 import torch
 
 
 class BaseSampler():
-    def __init__(self, data, n_samples=1, device="cpu"):
+    def __init__(self, data:Dict[str,object], n_samples:int=1, device:str="cpu"):
         assert isinstance(data, dict), "you must pass a dict with your data"
         self.device = device
         self.data = data

@@ -1,19 +1,22 @@
-from typing import Tuple
 import numpy as np
 import torch
 from .boco import Boco
-from ..samplers import base_sampler
 
-class Dirichlet(Boco):
-    def __init__(self, sampler:base_sampler, output_fn:function, name:str="dirichlet"):
-        """The Dirichlet boundary condition is a type 1 boundary condition which means it is used to specify constant function values at given points. There are no derivatives being specified.
 
-        More Info:
-            https://www.simscale.com/docs/simwiki/numerics-background/what-are-boundary-conditions/
+class Dirichlet(Boco):    
+    def __init__(self, sampler, output_fn, name="dirichlet"):
+        """Initializes Dirichlet boundary condition. 
+            This boundary condition specifies that the value of the outputs have to be equal to a value along the boundaries. 
+            For 2D the boundaries are [:,0], [:,-1], [0,:], [-1,:] so if your quantity is f like for laplace then f at boundaries equals to a constant, hence boundary condition of the first order, a constant. 
+
+
+        More Info: 
+            Boundary Conditions: https://www.simscale.com/docs/simwiki/numerics-background/what-are-boundary-conditions/
+            Laplace Equation: https://en.wikipedia.org/wiki/Laplace%27s_equation
 
         Args:
-            sampler (base_sampler): [description]
-            output_fn (function): [description]
+            sampler ([type]): [description]
+            output_fn ([type]): [description]
             name (str, optional): [description]. Defaults to "dirichlet".
         """
         super().__init__(name)
@@ -55,10 +58,7 @@ class Dirichlet(Boco):
             Dict[str,torch.Tensor]: Dictionary containing the name of the boundary condition and the loss value
         """
         _X, _y = self.sample()
-        X = torch.stack([
-            _X[var]
-            for var in inputs
-        ], axis=-1)
+        X = torch.stack([ _X[var] for var in inputs], axis=-1)
         y_hat = model(X)
         __y = []
         for i, var in enumerate(outputs):
