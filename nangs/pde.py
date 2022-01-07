@@ -37,6 +37,11 @@ class PDE():
         self.sampler = sampler
 
     def add_boco(self, boco):
+        """Boundary conditions
+
+        Args:
+            boco ([type]): [description]
+        """
         assert boco.name not in [
             boco.name for boco in self.bocos], f'Boco {boco.name} already exists, use another name'
         boco.validate(self.inputs, self.outputs)
